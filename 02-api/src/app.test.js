@@ -14,8 +14,9 @@ beforeAll(() => {
 describe('API', () => {
   it('deve voltar uma mensagem de sucesso', async () => {
     const response = await request.post('/login')
-    
+
     expect(response.status).toEqual(200)
     expect(response.body.message).toEqual('Sucesso no login!')
   })
 })
+

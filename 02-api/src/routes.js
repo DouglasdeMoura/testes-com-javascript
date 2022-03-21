@@ -11,4 +11,3 @@ router.post('/login', (ctx) => {
 })
 
 export const routes = router.routes()
-
