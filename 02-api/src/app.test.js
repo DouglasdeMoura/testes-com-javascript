@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest'
 import supertest from 'supertest'
-import * as utils from '../utils'
+import * as utils from './utils/index.js'
 
 import { app } from './app.js'
 

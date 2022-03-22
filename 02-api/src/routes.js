@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { cognitoLogin } from '../utils/index.js'
+import { cognitoLogin } from './utils/index.js'
 
 const router = new Router()
 
