@@ -1,0 +1,60 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:jest-dom/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    "plugin:storybook/recommended"
+  ],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "eslint-plugin-import-helpers",
+    "eslint-plugin-jest",
+    "eslint-plugin-storybook"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always", // new line between groups
+        "groups": [
+          "/^react/",
+          "/^@testing-library/",
+          "/^@storybook/",
+          "/styles.*/",
+          ["parent", "sibling", "index"],
+          "/\\.\\/styles/"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-var-requires": "off"
+  }
+}

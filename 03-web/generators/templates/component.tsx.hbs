@@ -1,0 +1,12 @@
+import { FC } from 'react'
+
+type {{pascalCase name}}Props = {
+  children?: React.ReactNode
+}
+
+export const {{pascalCase name}}: FC<{{pascalCase name}}Props> = ({ children }) => (
+  <div>
+    <h1>{{pascalCase name}}</h1>
+    <div>{children ? children : null}</div>
+  </div>
+)
