@@ -8,6 +8,8 @@ router.get('/', (ctx) => {
 })
 
 router.post('/login', async (ctx) => {
+  ctx.set('Content-type', 'application/json')
+
   try {
     ctx.assert(ctx.request.body.username, 401, 'Insira o seu usuário')
     ctx.assert(ctx.request.body.password, 401, 'Insira sua senha')
