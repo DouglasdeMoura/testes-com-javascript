@@ -1,9 +1,11 @@
 import { FC, useState } from 'react'
+import { client } from './api/client'
 
 export const App: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [sucessMessage, setSuccessMessage] = useState('')
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -12,19 +14,21 @@ export const App: FC = () => {
     
     setIsSubmitting(true)
     
-    fetch(
+    client.post<{ message: string }>(
       'http://localhost:3001/login',
-      { method: 'POST', body: JSON.stringify(data) }
+      data
     )
       .then(async (res) => {
-        const response = await res.json()
-
-        if (!res.ok) {
+        if (res.status !== 200) {
           setIsError(true)
-          setErrorMessage(response.message)
+          setErrorMessage(res.data.message)
         } else {
-          alert(response.message)
+          setSuccessMessage(res.data.message)
         }
+      })
+      .catch((err) => {
+        setIsError(true)
+        setErrorMessage(err.response.data.message)
       })
       .finally(() => setIsSubmitting(false))
 
@@ -34,10 +38,17 @@ export const App: FC = () => {
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="username" placeholder="Usuário" /><br />
-        <input type="password" name="password" placeholder="Senha" /><br />
+        <p>
+          <label htmlFor="email">Email</label>
+          <input id="email" type="text" name="username" placeholder="Usuário" />
+        </p>
+        <p>
+          <label htmlFor="password">Senha</label>
+          <input id="password" type="password" name="password" placeholder="Senha" />
+        </p>
         {isError && errorMessage && <p>{errorMessage}</p>}
-        <button disabled={isSubmitting}>Login</button>
+        {sucessMessage && <p>{sucessMessage}</p>}
+        <button disabled={isSubmitting}>Entrar</button>
       </form>
     </div>
   )
