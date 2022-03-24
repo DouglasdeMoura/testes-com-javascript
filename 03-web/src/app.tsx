@@ -1,5 +1,7 @@
 import { FC, useState } from 'react'
 import { client } from './api/client'
+import { Button } from './atoms/button'
+import Input from './atoms/input'
 
 export const App: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -38,17 +40,23 @@ export const App: FC = () => {
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <p>
-          <label htmlFor="email">Email</label>
-          <input id="email" type="text" name="username" placeholder="Usuário" />
-        </p>
-        <p>
-          <label htmlFor="password">Senha</label>
-          <input id="password" type="password" name="password" placeholder="Senha" />
-        </p>
+        <Input
+          label="Email"
+          type="email"
+          required
+          error={{ type: 'Digite um email válido' }}
+        />
+        <Input
+          label="Senha"
+          id="password"
+          name="password"
+          required
+          type="password"
+          error={{ required: 'Digite sua senha' }}
+        />
         {isError && errorMessage && <p>{errorMessage}</p>}
         {sucessMessage && <p>{sucessMessage}</p>}
-        <button disabled={isSubmitting}>Entrar</button>
+        <Button disabled={isSubmitting}>Entrar</Button>
       </form>
     </div>
   )
