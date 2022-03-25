@@ -1,5 +1,4 @@
 import Router from '@koa/router'
-import { cognitoLogin } from './utils/index.js'
 
 const router = new Router()
 
@@ -10,6 +9,8 @@ router.get('/', (ctx) => {
 router.post('/login', async (ctx) => {
   ctx.set('Content-type', 'application/json')
 
+  // TODO: Retornar os erros no seguinte formato https://datatracker.ietf.org/doc/html/rfc7807
+
   try {
     ctx.assert(ctx.request.body.username, 401, 'Insira o seu usuário')
     ctx.assert(ctx.request.body.password, 401, 'Insira sua senha')
@@ -19,13 +20,20 @@ router.post('/login', async (ctx) => {
     return
   }
 
-  const isLoggedIn = cognitoLogin(ctx.request.body?.username, ctx.request.body?.password)
+  // TODO: fazer o hash da senha
+
+  const isLoggedIn = await ctx.state.db.User.findOne({
+    username: ctx.request.body.username,
+    password: ctx.request.body.password
+  })
 
   if (!isLoggedIn) {
     ctx.status = 401
     ctx.body = { message: 'Usuário ou senha inválidos' }
     return
   }
+
+  // TODO: retornar o token de autenticação
 
   ctx.body = {
     message: 'Sucesso no login!'
